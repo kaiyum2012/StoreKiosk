@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ArrayOfStoreGridDataRow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <StoreGridDataRow>
+    <Extra>Wiper Length: 11, Shippping cost : 10</Extra>
+    <Name>ds</Name>
+    <ItemNumber>2</ItemNumber>
+    <Weight>1</Weight>
+    <Cost>15</Cost>
+    <Ship>true</Ship>
+    <RowId>1</RowId>
+    <ShippingCost>10</ShippingCost>
+  </StoreGridDataRow>
+  <StoreGridDataRow>
+    <Extra>Wiper Length: 11, Shippping cost : 10</Extra>
+    <Name>ds</Name>
+    <ItemNumber>2</ItemNumber>
+    <Weight>1</Weight>
+    <Cost>15</Cost>
+    <Ship>true</Ship>
+    <RowId>1</RowId>
+    <ShippingCost>10</ShippingCost>
+  </StoreGridDataRow>
+</ArrayOfStoreGridDataRow>

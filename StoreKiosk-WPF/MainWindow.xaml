@@ -5,8 +5,120 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StoreKiosk_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Automotive Store Kiosk" Height="768" Width="1024">
+
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="18"></Setter>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open Order History" Click="MenuItemOpen_Click" />
+                <MenuItem Header="_Save Order List" Click="MenuItemSave_Click" />
+                <Separator />
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+        </Menu>
+        <Grid x:Name="main">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.*"></RowDefinition>
+                <RowDefinition Height="3.*"></RowDefinition>
+                <RowDefinition Height="4.*"></RowDefinition>
+                <RowDefinition Height="1.*"></RowDefinition>
+                <RowDefinition Height="2.*"></RowDefinition>
+                <RowDefinition Height="2.*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="45.*"></ColumnDefinition>
+                <ColumnDefinition Width="55.*" />
+
+            </Grid.ColumnDefinitions>
+            <Label Content="Automative Store Kiosk" Grid.ColumnSpan="3" Grid.Row="0"  HorizontalAlignment="Center"  VerticalAlignment="Center" Name="appTitle" />
+
+            <GroupBox Header="Choose Item Type" Grid.Row="1" Grid.Column="0" Margin="10">
+                <StackPanel x:Name="itemTampleStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </GroupBox>
+            <GroupBox Header="Create Store Item" Grid.Row="1" Grid.Column="1" Margin="10">
+                <Grid x:Name="createItemForm" Margin="40,20,40,20"/>
+            </GroupBox>
+            <GroupBox Header="Store Items" Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Margin="20,20,20,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.*"/>
+                        <ColumnDefinition Width="1.*"/>
+                        <ColumnDefinition Width="1.*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.*"/>
+                        <RowDefinition Height="7.*"/>
+                        <RowDefinition Height="2.*"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="storeItemsGrid" AutoGeneratingColumn="StoreItemsGrid_AutoGeneratingColumn"  AutoGenerateColumns="True" IsReadOnly="True" Margin="10" Grid.Row="1" Grid.ColumnSpan="3"/>
+                    <Button Grid.Column="1" Content="Delete" Grid.Row="2" Height="40" Click="StoreItemDelete_Click" Margin="10,10,10,15"  />
+                    <Button Grid.Column="2" Content="Purchase" Grid.Row="2" Height="40" Click="Purchase_Click" Margin="10,10,10,15"  />
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Purchase Items" Grid.Row="2" Grid.Column="1" Grid.RowSpan="3" Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="17*"/>
+                        <ColumnDefinition Width="152*"/>
+                        <ColumnDefinition Width="169*"/>
+                        <ColumnDefinition Width="169*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.*"/>
+                        <RowDefinition Height="7.*"/>
+                        <RowDefinition Height="2.*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.*"></ColumnDefinition>
+                            <ColumnDefinition Width="1.*"></ColumnDefinition>
+                            <ColumnDefinition Width="1.*"></ColumnDefinition>
+                            <ColumnDefinition Width="1.*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Total Qty:" Grid.Column="0" HorizontalContentAlignment="Right" />
+                        <Label Content="0" Name="purchasedQty" HorizontalContentAlignment="Center" Grid.Column="1" />
+                        <Label Content="Total Cost:"  Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Right"/>
+                        <Label Content="0" HorizontalContentAlignment="Center" Name="purchaseTotal" Grid.Row="1" Grid.Column="3"/>
+                    </Grid>
+                    <DataGrid x:Name="purchaseDataGrid" Grid.Row="1" Grid.ColumnSpan="4"  AutoGenerateColumns="True" AutoGeneratingColumn="purchaseDataGrid_AutoGeneratingColumn" IsReadOnly="True" Margin="10"/>
+                    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.*"></ColumnDefinition>
+                            <ColumnDefinition Width="1.*"></ColumnDefinition>
+                            <ColumnDefinition Width="1.*"></ColumnDefinition>
+                            <ColumnDefinition Width="1.*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Clear" Name="purchaseClear" Click="PurchaseClear_Click" Height="40" Grid.Row="0" Grid.Column="3" Margin="10,10,10,15"/>
+                        <Button Content="Delete" Name="purchaseItemDelete" Click="PurchaseItemDelete_Click" Height="40"  Margin="10,10,10,15" Grid.Row="0" Grid.Column="2"/>
+                    </Grid>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid Margin="20" x:Name="actionGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="Most Purchased" Click="MostPurchased_Click" Width="150" Height="40"/>
+                </Grid>
+                
+            </GroupBox>
+        </Grid>
+    </DockPanel>
 </Window>
