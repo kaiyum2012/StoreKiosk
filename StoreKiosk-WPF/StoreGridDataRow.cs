@@ -33,16 +33,9 @@ namespace StoreKiosk_WPF
             {
                 if (IsShippable(item))
                 {
-                    Ship = true;
                     var i = item as IShipItem;
-                    if (i != null)
-                    {
-                        ShippingCost = i.Shipitem();
-                    }
-                    else
-                    {
-                        shippingCost = 0;
-                    }
+                    shippingCost = i.Ship ? i.Shipitem() : 0;
+                    Ship = i.Ship;
                 }
                 else
                 {
@@ -55,17 +48,7 @@ namespace StoreKiosk_WPF
                 Console.WriteLine($"Break at IShipItem interface search  {e.Message}");
             }
 
-            //Type = icon;
             Extra = item.Display();
-            //AddButton = new Button();
-            //AddButton.Content = "Purchase";
-            //AddButton.Click += AddButton_Click;
-            //AddButton.DataContext = item;
-        }
-
-        private void AddButton_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Console.WriteLine("click");
         }
 
         private bool IsShippable(Item item)

@@ -36,8 +36,10 @@ namespace StoreKiosk_WPF
         const string TIRE_DIA_FORM_NAME = "tireDiameter";
         const string WIPER_NAME_FORM_NAME = "wiperName";
         const string WIPER_LENGTH_FORM_NAME = "wiperLength";
+        const string WIPER_SHIP_FORM_NAME = "wiperShip";
         const string BATTERY_NAME_FORM_NAME = "batteryName";
         const string BATTERY_VOLTAGE_FORM_NAME = "batteryVoltage";
+        const string BATTERY_SHIP_FORM_NAME = "batteryShip";
 
 
         List<UIItem>  templateItems = new List<UIItem>() 
@@ -313,6 +315,17 @@ namespace StoreKiosk_WPF
 
                 createItemForm.RowDefinitions.Add(new RowDefinition());
 
+                CheckBox ship = new CheckBox
+                {
+                    Content = "Ship",
+                    IsChecked = false
+                };
+                ship.SetValue(Grid.RowProperty, 2);
+                ship.SetValue(Grid.ColumnProperty,1);
+                RegisterName(WIPER_SHIP_FORM_NAME, ship);
+
+                createItemForm.RowDefinitions.Add(new RowDefinition());
+
                 Button button = new Button
                 {
                     Content = "Create Windshild Wiper",
@@ -322,7 +335,7 @@ namespace StoreKiosk_WPF
                 };
 
                 button.Click += ItemCreate_Clicked;
-                button.SetValue(Grid.RowProperty, 2);
+                button.SetValue(Grid.RowProperty, 3);
                 button.SetValue(Grid.ColumnProperty, 1);
 
                 createItemForm.RowDefinitions.Add(new RowDefinition());
@@ -341,6 +354,7 @@ namespace StoreKiosk_WPF
                 createItemForm.Children.Add(textBox);
                 createItemForm.Children.Add(label1);
                 createItemForm.Children.Add(textBox1);
+                createItemForm.Children.Add(ship);
                 createItemForm.Children.Add(button);
 
                 void _deregisterForm()
@@ -352,6 +366,10 @@ namespace StoreKiosk_WPF
                     if (createItemForm.FindName(WIPER_LENGTH_FORM_NAME) != null)
                     {
                         UnregisterName(WIPER_LENGTH_FORM_NAME);
+                    }
+                    if(createItemForm.FindName(WIPER_SHIP_FORM_NAME) != null)
+                    {
+                        UnregisterName(WIPER_SHIP_FORM_NAME);
                     }
                 }
             }
@@ -413,6 +431,18 @@ namespace StoreKiosk_WPF
 
                 createItemForm.RowDefinitions.Add(new RowDefinition());
 
+
+                CheckBox ship = new CheckBox
+                {
+                    Content = "Ship",
+                    IsChecked = false
+                };
+                ship.SetValue(Grid.RowProperty, 2);
+                ship.SetValue(Grid.ColumnProperty, 1);
+                RegisterName(BATTERY_SHIP_FORM_NAME, ship);
+
+                createItemForm.RowDefinitions.Add(new RowDefinition());
+
                 Button button = new Button
                 {
                     Content = "Create Battery",
@@ -422,7 +452,7 @@ namespace StoreKiosk_WPF
                 };
 
                 button.Click += ItemCreate_Clicked;
-                button.SetValue(Grid.RowProperty, 2);
+                button.SetValue(Grid.RowProperty, 3);
                 button.SetValue(Grid.ColumnProperty, 1);
 
                 createItemForm.RowDefinitions.Add(new RowDefinition());
@@ -441,6 +471,7 @@ namespace StoreKiosk_WPF
                 createItemForm.Children.Add(textBox);
                 createItemForm.Children.Add(label1);
                 createItemForm.Children.Add(textBox1);
+                createItemForm.Children.Add(ship);
                 createItemForm.Children.Add(button);
 
                 void _deregisterForm()
@@ -452,6 +483,11 @@ namespace StoreKiosk_WPF
                     if (createItemForm.FindName(BATTERY_VOLTAGE_FORM_NAME) != null)
                     {
                         UnregisterName(BATTERY_VOLTAGE_FORM_NAME);
+                    }
+
+                    if (createItemForm.FindName(BATTERY_SHIP_FORM_NAME) != null)
+                    {
+                        UnregisterName(BATTERY_SHIP_FORM_NAME);
                     }
                 }
             }
@@ -499,12 +535,13 @@ namespace StoreKiosk_WPF
 
                     TextBox wiper = (TextBox)createItemForm.FindName(WIPER_NAME_FORM_NAME);
                     TextBox length = (TextBox)createItemForm.FindName(WIPER_LENGTH_FORM_NAME);
+                    CheckBox ship = (CheckBox)createItemForm.FindName(WIPER_SHIP_FORM_NAME);
 
                     if (!IsEmptyOrNullInput(wiper) && !IsEmptyOrNullInput(length))
                     {
                         try
                         {
-                            storeItems.Add(new WindshildWiper(name: wiper.Text, length: int.Parse(length.Text)));
+                            storeItems.Add(new WindshildWiper(name: wiper.Text, length: int.Parse(length.Text),ship: ship.IsChecked.Value));
                         }
                         catch (Exception ex)
                         {
@@ -521,12 +558,13 @@ namespace StoreKiosk_WPF
 
                     TextBox battery = (TextBox)createItemForm.FindName(BATTERY_NAME_FORM_NAME);
                     TextBox voltage = (TextBox)createItemForm.FindName(BATTERY_VOLTAGE_FORM_NAME);
+                    CheckBox ship1 = (CheckBox)createItemForm.FindName(BATTERY_SHIP_FORM_NAME);
 
                     if (!IsEmptyOrNullInput(battery) && !IsEmptyOrNullInput(voltage))
                     {
                         try
                         {
-                            storeItems.Add(new Battery(name: battery.Text, voltage: int.Parse(voltage.Text)));
+                            storeItems.Add(new Battery(name: battery.Text, voltage: int.Parse(voltage.Text), ship: ship1.IsChecked.Value));
                         }
                         catch (Exception ex)
                         {
@@ -855,17 +893,41 @@ namespace StoreKiosk_WPF
 
         private void MostPurchased_Click(object sender, RoutedEventArgs e)
         {
-            var result = purchaseItems.GroupBy(i => i.ItemNumber).OrderByDescending(i => i.Count()).FirstOrDefault().ToList();
-
-            if (result != null || result.Count != 0)
+            if (purchaseItems.Count > 0)
             {
-                MessageBox.Show($"Item : '{result.First().Name} of Item Number : {result.First().ItemNumber} is Purchased : {result.Count} times", "Most purchase Item");
+                //var result = purchaseItems.GroupBy(i => i.ItemNumber).OrderByDescending(i => i.Count()).FirstOrDefault().ToList();
+                var result = purchaseItems.GroupBy(i => i.ItemNumber).OrderByDescending(i => i.Count()).Select(group => new
+                { key = group.Key, Count = group.Count(),group.FirstOrDefault().Name, group.FirstOrDefault().ItemNumber}).OrderByDescending(i=>i.Count).ToList();
 
+                if (result != null && result.Count != 0)
+                {
+                    int count = 0;
+                    string str = "";
+                    foreach (var item in result)
+                    {
+                        if (item.Count >= count)
+                        { 
+                            str += $"Item : '{item.Name}` of Item Number : {item.ItemNumber} is Purchased : {item.Count} times \n";
+                            count = item.Count;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    MessageBox.Show(str, "Most purchase Item");
+
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong, Please try later", "Warning - Most Purchase Items");
+
+                }
             }
             else
             {
-                MessageBox.Show("Something went wrong, Please try later", "Warning - Most Purchase Items");
-
+                MessageBox.Show("No Purhcase history Found, Please purchase before operation");
             }
         }
     }

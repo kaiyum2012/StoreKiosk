@@ -18,23 +18,29 @@ namespace StoreKiosk_WPF
             ItemNo = _no;
             Cost = 100;
             Weight = 10;
+            Ship = false;
         }
 
-        public Battery(string name, int voltage) : base(name)
+        public Battery(string name, int voltage, bool ship = false) : base(name)
         {
             ItemNo = _no;
             Voltage = voltage;
             Cost = 100;
             Weight = 10;
+            Ship = ship;
         }
 
-        public bool Ship => true;
+        public bool Ship { get; set; }
 
         public int Voltage { get => voltage; set => voltage = value; }
 
         public override string Display()
         {
-            return $"Battery Voltage: {Voltage}, Shippping cost : {Shipitem()}";
+            if(Ship)
+                return $"Battery Voltage: {Voltage}, Shippping cost : {Shipitem()}";
+            else
+                return $"Battery Voltage: {Voltage}";
+
         }
 
         public int Shipitem()

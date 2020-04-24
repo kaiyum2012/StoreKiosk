@@ -2,7 +2,7 @@
 {
     public interface IShipItem
     {
-        bool Ship { get; }
+        bool Ship { get; set; }
 
         int Shipitem();
     }

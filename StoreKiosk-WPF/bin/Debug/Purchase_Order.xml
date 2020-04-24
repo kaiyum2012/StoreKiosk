@@ -1,23 +1,53 @@
 <?xml version="1.0"?>
 <ArrayOfStoreGridDataRow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <StoreGridDataRow>
-    <Extra>Wiper Length: 11, Shippping cost : 10</Extra>
-    <Name>ds</Name>
-    <ItemNumber>2</ItemNumber>
-    <Weight>1</Weight>
-    <Cost>15</Cost>
+    <Extra>Battery Voltage: 212, Shippping cost : 30</Extra>
+    <Name>rfd</Name>
+    <ItemNumber>3</ItemNumber>
+    <Weight>10</Weight>
+    <Cost>100</Cost>
     <Ship>true</Ship>
     <RowId>1</RowId>
-    <ShippingCost>10</ShippingCost>
+    <ShippingCost>30</ShippingCost>
   </StoreGridDataRow>
   <StoreGridDataRow>
-    <Extra>Wiper Length: 11, Shippping cost : 10</Extra>
-    <Name>ds</Name>
+    <Extra>Battery Voltage: 212, Shippping cost : 30</Extra>
+    <Name>rfd</Name>
+    <ItemNumber>3</ItemNumber>
+    <Weight>10</Weight>
+    <Cost>100</Cost>
+    <Ship>true</Ship>
+    <RowId>1</RowId>
+    <ShippingCost>30</ShippingCost>
+  </StoreGridDataRow>
+  <StoreGridDataRow>
+    <Extra>Wiper Length: 223</Extra>
+    <Name>asdsa</Name>
     <ItemNumber>2</ItemNumber>
     <Weight>1</Weight>
     <Cost>15</Cost>
-    <Ship>true</Ship>
-    <RowId>1</RowId>
-    <ShippingCost>10</ShippingCost>
+    <Ship>false</Ship>
+    <RowId>3</RowId>
+    <ShippingCost>0</ShippingCost>
+  </StoreGridDataRow>
+  <StoreGridDataRow>
+    <Extra>Wiper Length: 223</Extra>
+    <Name>asdsa</Name>
+    <ItemNumber>2</ItemNumber>
+    <Weight>1</Weight>
+    <Cost>15</Cost>
+    <Ship>false</Ship>
+    <RowId>3</RowId>
+    <ShippingCost>0</ShippingCost>
+  </StoreGridDataRow>
+  <StoreGridDataRow>
+    <Extra>Wheel Diameter: 121</Extra>
+    <Name>wqe</Name>
+    <ItemNumber>1</ItemNumber>
+    <Weight>30</Weight>
+    <Cost>200</Cost>
+    <Ship>false</Ship>
+    <RowId>4</RowId>
+    <ShippingCost>0</ShippingCost>
   </StoreGridDataRow>
 </ArrayOfStoreGridDataRow>

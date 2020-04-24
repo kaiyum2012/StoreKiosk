@@ -12,31 +12,36 @@ namespace StoreKiosk_WPF
 
         int length;
 
-        
+
 
         public WindshildWiper()
         {
             ItemNo = _no;
             Cost = 15;
             Weight = 1;
+            Ship = false;
         }
 
-        public WindshildWiper(string name, int length) : base(name)
+        public WindshildWiper(string name, int length,bool ship = false) : base(name)
         {
             ItemNo = _no;
             Length = length;
             Cost = 15;
             Weight = 1;
+            Ship = ship;
         }
 
 
         public int Length { get => length; set => length = value; }
 
-        public bool Ship => true;
+        public bool Ship {get; set;}
 
         public override string Display()
         {
-            return $"Wiper Length: {Length}, Shippping cost : {Shipitem()}";
+            if(Ship)
+                return $"Wiper Length: {Length}, Shippping cost : {Shipitem()}";
+            else
+                return $"Wiper Length: {Length}";
         }
 
         public int Shipitem()
